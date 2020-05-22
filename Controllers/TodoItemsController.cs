@@ -36,7 +36,9 @@ namespace Test3.Controllers
                 result = result.Where(t => to <= t.DateAdded);
             }
 
-            var resultList = await result.ToListAsync();
+            var resultList = await result
+                .OrderByDescending(to => to.DateAdded)
+                .ToListAsync();
             return resultList;
         }
 
