@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update;
 using Test3.Models;
 
 namespace Test3.Controllers
@@ -20,9 +22,22 @@ namespace Test3.Controllers
 
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems(
+            [FromQuery]DateTimeOffset? from = null, 
+            [FromQuery]DateTimeOffset? to = null)
         {
-            return await _context.TodoItems.ToListAsync();
+            IQueryable <TodoItem> result = _context.TodoItems;
+            if (from != null)
+            {
+                result = result.Where(t => from <= t.DateAdded);
+            }
+            if (to != null) 
+            {
+                result = result.Where(t => to <= t.DateAdded);
+            }
+
+            var resultList = await result.ToListAsync();
+            return resultList;
         }
 
         // GET: api/TodoItems/5
