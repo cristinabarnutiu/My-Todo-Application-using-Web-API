@@ -21,6 +21,12 @@ namespace Test3.Controllers
         }
 
         // GET: api/TodoItems
+        /// <summary>
+        /// Get a list of all todo items
+        /// </summary>
+        /// <param name="from">Filters todo items added from this datetime inclusive. Leave empty for no lower limit.</param>
+        /// <param name="to">Filters todo items added to this datetime inclusive. Leave empty for no upper limit.</param>
+        /// <returns>A list of tasks.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems(
             [FromQuery]DateTimeOffset? from = null, 
