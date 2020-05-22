@@ -10,5 +10,6 @@ namespace Test3.Models
         }
 
         public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

@@ -19,5 +19,6 @@ namespace Test3.Models
         public Importance Importance { get; set; }
         public State State { get; set; }
         public DateTimeOffset DateClosed { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
