@@ -27,42 +27,69 @@ namespace Test3.Controllers
         /// <param name="from">Filters todo items added from this datetime inclusive. Leave empty for no lower limit.</param>
         /// <param name="to">Filters todo items added to this datetime inclusive. Leave empty for no upper limit.</param>
         /// <returns>A list of tasks.</returns>
+        
+        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems(
+        public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems(
             [FromQuery]DateTimeOffset? from = null, 
             [FromQuery]DateTimeOffset? to = null)
         {
-            IQueryable <TodoItem> result = _context.TodoItems;
+            IQueryable <TodoItem> result = _context.TodoItems.Include(c => c.Comments);
             if (from != null)
             {
                 result = result.Where(t => from <= t.DateAdded);
             }
             if (to != null) 
-            {
+          {
                 result = result.Where(t => to <= t.DateAdded);
             }
 
-            var resultList = await result
-                .OrderByDescending(to => to.DateAdded)
+            //var resultList = await result
+            //.OrderByDescending(to => to.DateAdded)
+            //.ToListAsync();
+
+            var resultList = await result.Select(c => TodoItemDTO.ShowTodoItemsAndNumberOfComments(c))
+                //.OrderByDescending(to => to.DateAdded)
                 .ToListAsync();
             return resultList;
+
+
         }
 
+
+
         // GET: api/TodoItems/5
+        /// <summary>
+        /// Get item details
+        /// </summary>
+        /// <param name="id">Get item details for a specific id</param>
+        /// <returns>A newly created TodoItem</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>  
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = _context.TodoItems
+               .Include(c => c.Comments)
+               .Select(c => TodoItemDTO.ShowTodoDTOItemsAndComments(c))
+               .AsEnumerable()
+               .FirstOrDefault(c => c.Id == id);
 
             if (todoItem == null)
             {
-                return NotFound();
+                return NotFound("This item does not exist!");
             }
 
-            return todoItem;
+            return Ok(todoItem);
         }
 
         // PUT: api/TodoItems/5
+        /// <summary>
+        /// Update an item
+        /// </summary>
+        /// <param name="id">Updates an item with a specific id</param>
+        /// <param name="todoItem"></param>
+        /// <returns></returns>
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -71,6 +98,16 @@ namespace Test3.Controllers
             if (id != todoItem.Id)
             {
                 return BadRequest();
+            }
+
+            //Lab 2
+            if (todoItem.State.Equals(State.Closed))
+            {
+                todoItem.DateClosed = DateTime.Now;
+            }
+            else
+            {
+                todoItem.DateClosed = default;
             }
 
             _context.Entry(todoItem).State = EntityState.Modified;
@@ -83,7 +120,7 @@ namespace Test3.Controllers
             {
                 if (!TodoItemExists(id))
                 {
-                    return NotFound();
+                    return NotFound("This item does not exist!");
                 }
                 else
                 {
@@ -95,6 +132,11 @@ namespace Test3.Controllers
         }
 
         // POST: api/TodoItems
+        /// <summary>
+        /// Add an item
+        /// </summary>
+        /// <param name="todoItem"></param>
+        /// <returns></returns>
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -107,13 +149,18 @@ namespace Test3.Controllers
         }
 
         // DELETE: api/TodoItems/5
+        /// <summary>
+        /// Delete an item
+        /// </summary>
+        /// <param name="id">Deletes item with specific id</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<TodoItem>> DeleteTodoItem(long id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
             {
-                return NotFound();
+                return NotFound("This item does not exist!");
             }
 
             _context.TodoItems.Remove(todoItem);

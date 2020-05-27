@@ -8,8 +8,8 @@ namespace Test3.Models
     public class Comment
     {
         public long Id { get; set; }
-        public string Author { get; set; }
-        public string Content { get; set; }
+        public string Text { get; set; }
+        public bool Important { get; set; }
         public TodoItem TodoItem { get; set; }
     }
 }

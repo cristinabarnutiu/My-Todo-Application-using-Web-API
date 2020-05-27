@@ -20,5 +20,6 @@ namespace Test3.Models
         public State State { get; set; }
         public DateTimeOffset DateClosed { get; set; }
         public List<Comment> Comments { get; set; }
+        //public int NumberOfComments { get; set; }
     }
 }
