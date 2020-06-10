@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update;
 using Test3.Models;
+using Test3.ViewModels;
 
 namespace Test3.Controllers
 {
@@ -30,7 +31,7 @@ namespace Test3.Controllers
         
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems(
+        public async Task<ActionResult<IEnumerable<TodoItemWithNumberOfComments>>> GetTodoItems(
             [FromQuery]DateTimeOffset? from = null, 
             [FromQuery]DateTimeOffset? to = null)
         {
@@ -48,8 +49,10 @@ namespace Test3.Controllers
             //.OrderByDescending(to => to.DateAdded)
             //.ToListAsync();
 
-            var resultList = await result.Select(c => TodoItemDTO.ShowTodoItemsAndNumberOfComments(c))
-                //.OrderByDescending(to => to.DateAdded)
+            var resultList = await result
+                .OrderByDescending(to => to.DateAdded)
+                .Include(t => t.Comments)
+                .Select(t => TodoItemWithNumberOfComments.FromTodoItem(t))
                 .ToListAsync();
             return resultList;
 

@@ -1,0 +1,52 @@
+<h1 id="tableLabel">Todo Items</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!todoItems"><em>Loading...</em></p>
+
+<p>List of Todo Items</p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="todoItems">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date Added</th>
+            <th>Deadline</th>
+            <th>Importance</th>
+            <th>State</th>
+            <th>Date Closed</th>
+            <th>Number of Comments</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let todoItem of todoItems">
+            <td>{{ todoItem.title }}</td>
+            <td>{{ todoItem.description }}</td>
+            <td>{{ todoItem.dateAdded }}</td>
+            <td>{{ todoItem.deadline }}</td>
+            <td>{{ todoItem.importance }}</td>
+            <td>{{ todoItem.state }}</td>
+            <td>{{ todoItem.dateClosed }}</td>
+            <td>{{ todoItem.numberOfComments }}</td>
+            <td>
+            <a [routerLink]="['/fetch-data',todoItem.id]" routerLinkActive="active">Details</a> | 
+            <a>Edit</a> |
+            <a>Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Add Todo Item</p>
+
+<input [(ngModel)]="title" />
+
+<p>{{ title }}</p>
+
+<button (click)="submit()">Submit!</button>
+
+<input type="date" />
+
+
