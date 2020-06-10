@@ -70,32 +70,34 @@ namespace Test3.Controllers
         /// <response code="201">Returns the newly created item</response>
         /// <response code="400">If the item is null</response>  
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoItemDetails>> GetTodoItem(long id)
         {
-            var todoItem = _context.TodoItems
-               .Include(c => c.Comments)
-               .Select(c => TodoItemDTO.ShowTodoDTOItemsAndComments(c))
-               .AsEnumerable()
-               .FirstOrDefault(c => c.Id == id);
+                var todoItem = await _context
+                    .TodoItems
+                    .Include(t => t.Comments)
+                    .FirstOrDefaultAsync(t => t.Id == id);
 
-            if (todoItem == null)
-            {
-                return NotFound("This item does not exist!");
+                if (todoItem == null)
+                {
+                    return NotFound("This Todo Item does not exist!");
+                }
+
+                return TodoItemDetails.FromTodoItem(todoItem);
             }
+        
+     
 
-            return Ok(todoItem);
-        }
 
-        // PUT: api/TodoItems/5
-        /// <summary>
-        /// Update an item
-        /// </summary>
-        /// <param name="id">Updates an item with a specific id</param>
-        /// <param name="todoItem"></param>
-        /// <returns></returns>
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+            // PUT: api/TodoItems/5
+            /// <summary>
+            /// Update an item
+            /// </summary>
+            /// <param name="id">Updates an item with a specific id</param>
+            /// <param name="todoItem"></param>
+            /// <returns></returns>
+            // To protect from overposting attacks, enable the specific properties you want to bind to, for
+            // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+            [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
             if (id != todoItem.Id)

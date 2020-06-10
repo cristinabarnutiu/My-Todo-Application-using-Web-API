@@ -1,3 +1,9 @@
 <p>todo-item-details works!</p>
 
-<p *ngIf="todoItem"><em>{{todoItem.name}}</em></p>
+<p *ngIf="todoItem"><em>Title: {{todoItem.title}}</em></p>
+<p *ngIf="todoItem"><em>Description: {{todoItem.description}}</em></p>
+<p *ngIf="todoItem"><em>Date Added: {{todoItem.dateAdded}}</em></p>
+<p *ngIf="todoItem"><em>Deadline: {{todoItem.deadline}}</em></p>
+<p *ngIf="todoItem"><em>Importance: {{todoItem.importance}}</em></p>
+<p *ngIf="todoItem"><em>State: {{todoItem.state}}</em></p>
+<p *ngIf="todoItem"><em>Date Closed: {{todoItem.dateClosed}}</em></p>

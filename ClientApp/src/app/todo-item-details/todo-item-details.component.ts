@@ -21,8 +21,8 @@ export class TodoItemDetailsComponent implements OnInit {
         //this.loadTodoItem();
     }
 
-    loadTodoItem(todoItemId: number) {
-        this.http.get<TodoItemWithDetails>(this.baseUrl + 'api/todoitems/`${todoItemId}`').subscribe(result => {
+    loadTodoItem(todoItemId: string) {
+        this.http.get<TodoItemWithDetails>(this.baseUrl + 'api/todoitems/'+todoItemId).subscribe(result => {
             this.todoItem = result;
             console.log(this.todoItem);
         }, error => console.error(error));
@@ -30,7 +30,7 @@ export class TodoItemDetailsComponent implements OnInit {
 
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
-            this.loadTodoItem(+params.get('todoItemId'));
+            this.loadTodoItem(params.get('todoItemId'));
         });
   }
 

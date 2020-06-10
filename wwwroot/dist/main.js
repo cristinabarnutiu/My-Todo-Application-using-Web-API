@@ -74,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<p>todo-item-details works!</p>\n\n<p *ngIf=\"todoItem\"><em>{{todoItem.name}}</em></p>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<p>todo-item-details works!</p>\n\n<p *ngIf=\"todoItem\"><em>Title: {{todoItem.title}}</em></p>\n<p *ngIf=\"todoItem\"><em>Description: {{todoItem.description}}</em></p>\n<p *ngIf=\"todoItem\"><em>Date Added: {{todoItem.dateAdded}}</em></p>\n<p *ngIf=\"todoItem\"><em>Deadline: {{todoItem.deadline}}</em></p>\n<p *ngIf=\"todoItem\"><em>Importance: {{todoItem.importance}}</em></p>\n<p *ngIf=\"todoItem\"><em>State: {{todoItem.state}}</em></p>\n<p *ngIf=\"todoItem\"><em>Date Closed: {{todoItem.dateClosed}}</em></p>\n");
 
 /***/ }),
 
@@ -496,14 +496,14 @@ let TodoItemDetailsComponent = class TodoItemDetailsComponent {
         //this.loadTodoItem();
     }
     loadTodoItem(todoItemId) {
-        this.http.get(this.baseUrl + 'api/todoitems/`${todoItemId}`').subscribe(result => {
+        this.http.get(this.baseUrl + 'api/todoitems/' + todoItemId).subscribe(result => {
             this.todoItem = result;
             console.log(this.todoItem);
         }, error => console.error(error));
     }
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
-            this.loadTodoItem(+params.get('todoItemId'));
+            this.loadTodoItem(params.get('todoItemId'));
         });
     }
 };
