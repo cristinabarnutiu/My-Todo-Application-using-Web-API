@@ -1,9 +1,35 @@
 <p>todo-item-details works!</p>
 
-<p *ngIf="todoItem"><em>Title: {{todoItem.title}}</em></p>
-<p *ngIf="todoItem"><em>Description: {{todoItem.description}}</em></p>
-<p *ngIf="todoItem"><em>Date Added: {{todoItem.dateAdded}}</em></p>
-<p *ngIf="todoItem"><em>Deadline: {{todoItem.deadline}}</em></p>
-<p *ngIf="todoItem"><em>Importance: {{todoItem.importance}}</em></p>
-<p *ngIf="todoItem"><em>State: {{todoItem.state}}</em></p>
-<p *ngIf="todoItem"><em>Date Closed: {{todoItem.dateClosed}}</em></p>
+
+
+<p *ngIf="!todoItem"><em>Loading...</em></p>
+
+<a [routerLink]="['/fetch-data']" routerLinkActive="active">Back</a>
+
+    <h2>{{todoItem.title}}</h2>
+
+    <!---<p *ngIf="todoItem"><em>Title: {{todoItem.title }}</em></p>-->
+    <p *ngIf="todoItem"><em>Description: </em>{{todoItem.description}}</p>
+    <p *ngIf="todoItem"><em>Date Added: </em>{{todoItem.dateAdded}}</p>
+    <p *ngIf="todoItem"><em>Deadline: </em>{{todoItem.deadline}}</p>
+    <p *ngIf="todoItem"><em>Importance: </em>{{todoItem.importance}}</p>
+    <p *ngIf="todoItem"><em>State: </em>{{todoItem.state}}</p>
+    <p *ngIf="todoItem"><em>Date Closed: </em>{{todoItem.dateClosed}}</p>
+
+    <h2>Comments</h2>
+    <table *ngIf="todoItem">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th></th>
+                <th>Important</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let comment of todoItem.comments">
+            <td>{{ comment.text }}</td>
+            <td></td>
+            <td>{{ comment.important }}</td>
+        </tr>
+    </table>
+
+    <a [routerLink]="['/fetch-data']" routerLinkActive="active">Back</a>

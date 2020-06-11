@@ -23,6 +23,17 @@ export class FetchDataComponent {
       }, error => console.error(error));
     }
 
+    delete(todoItemId: string) {
+        if (confirm('Are you sure you want to delete the item with id' + todoItemId + '?')) {
+            this.http.delete(this.baseUrl + 'api/todoitems/' + todoItemId).subscribe(
+                result => {
+                alert('Todo Item successfully deleted!');
+                this.loadTodoItems();
+            },
+                error => alert('Cannot delete item. Please check if it has comments.'))
+        }
+    }
+
     submit() {
         var todoItem: TodoItem = <TodoItem>{};
         todoItem.title = this.name;

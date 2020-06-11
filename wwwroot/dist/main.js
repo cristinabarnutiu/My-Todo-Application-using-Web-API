@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h1 id=\"tableLabel\">Todo Items</h1>\r\n\r\n<p>This component demonstrates fetching data from the server.</p>\r\n\r\n<p *ngIf=\"!todoItems\"><em>Loading...</em></p>\r\n\r\n<p>List of Todo Items</p>\r\n\r\n<table class='table table-striped' aria-labelledby=\"tableLabel\" *ngIf=\"todoItems\">\r\n    <thead>\r\n        <tr>\r\n            <th>Title</th>\r\n            <th>Description</th>\r\n            <th>Date Added</th>\r\n            <th>Deadline</th>\r\n            <th>Importance</th>\r\n            <th>State</th>\r\n            <th>Date Closed</th>\r\n            <th>Number of Comments</th>\r\n            <th>Operations</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=\"let todoItem of todoItems\">\r\n            <td>{{ todoItem.title }}</td>\r\n            <td>{{ todoItem.description }}</td>\r\n            <td>{{ todoItem.dateAdded }}</td>\r\n            <td>{{ todoItem.deadline }}</td>\r\n            <td>{{ todoItem.importance }}</td>\r\n            <td>{{ todoItem.state }}</td>\r\n            <td>{{ todoItem.dateClosed }}</td>\r\n            <td>{{ todoItem.numberOfComments }}</td>\r\n            <td>\r\n            <a [routerLink]=\"['/fetch-data',todoItem.id]\" routerLinkActive=\"active\">Details</a> | \r\n            <a>Edit</a> |\r\n            <a>Delete</a>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n<p>Add Todo Item</p>\r\n\r\n<input [(ngModel)]=\"title\" />\r\n\r\n<p>{{ title }}</p>\r\n\r\n<button (click)=\"submit()\">Submit!</button>\r\n\r\n<input type=\"date\" />\r\n\r\n\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<h1 id=\"tableLabel\">Todo Items</h1>\r\n\r\n<p>This component demonstrates fetching data from the server.</p>\r\n\r\n<p *ngIf=\"!todoItems\"><em>Loading...</em></p>\r\n\r\n<p>List of Todo Items</p>\r\n\r\n<table class='table table-striped' aria-labelledby=\"tableLabel\" *ngIf=\"todoItems\">\r\n    <thead>\r\n        <tr>\r\n            <th>Title</th>\r\n            <th>Description</th>\r\n            <th>Date Added</th>\r\n            <th>Deadline</th>\r\n            <th>Importance</th>\r\n            <th>State</th>\r\n            <th>Date Closed</th>\r\n            <th>Number of Comments</th>\r\n            <th>Operations</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=\"let todoItem of todoItems\">\r\n            <td>{{ todoItem.title }}</td>\r\n            <td>{{ todoItem.description }}</td>\r\n            <td>{{ todoItem.dateAdded }}</td>\r\n            <td>{{ todoItem.deadline }}</td>\r\n            <td>{{ todoItem.importance }}</td>\r\n            <td>{{ todoItem.state }}</td>\r\n            <td>{{ todoItem.dateClosed }}</td>\r\n            <td>{{ todoItem.numberOfComments }}</td>\r\n            <td>\r\n            <a class=\"btn btn-primary\" [routerLink]=\"['/fetch-data',todoItem.id]\" routerLinkActive=\"active\">Details</a> | \r\n            <a class=\"btn btn-secondary\">Edit</a> | \r\n            <a class=\"btn btn-danger\" (click)=\"delete(todoItem.id)\">Delete</a>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n<p>Add Todo Item</p>\r\n\r\n<input [(ngModel)]=\"title\" />\r\n\r\n<p>{{ title }}</p>\r\n\r\n<button (click)=\"submit()\">Submit!</button>\r\n\r\n<input type=\"date\" />\r\n\r\n\r\n");
 
 /***/ }),
 
@@ -74,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<p>todo-item-details works!</p>\n\n<p *ngIf=\"todoItem\"><em>Title: {{todoItem.title}}</em></p>\n<p *ngIf=\"todoItem\"><em>Description: {{todoItem.description}}</em></p>\n<p *ngIf=\"todoItem\"><em>Date Added: {{todoItem.dateAdded}}</em></p>\n<p *ngIf=\"todoItem\"><em>Deadline: {{todoItem.deadline}}</em></p>\n<p *ngIf=\"todoItem\"><em>Importance: {{todoItem.importance}}</em></p>\n<p *ngIf=\"todoItem\"><em>State: {{todoItem.state}}</em></p>\n<p *ngIf=\"todoItem\"><em>Date Closed: {{todoItem.dateClosed}}</em></p>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<p>todo-item-details works!</p>\n\n\n\n<p *ngIf=\"!todoItem\"><em>Loading...</em></p>\n\n<a [routerLink]=\"['/fetch-data']\" routerLinkActive=\"active\">Back</a>\n\n    <h2>{{todoItem.title}}</h2>\n\n    <!---<p *ngIf=\"todoItem\"><em>Title: {{todoItem.title }}</em></p>-->\n    <p *ngIf=\"todoItem\"><em>Description: </em>{{todoItem.description}}</p>\n    <p *ngIf=\"todoItem\"><em>Date Added: </em>{{todoItem.dateAdded}}</p>\n    <p *ngIf=\"todoItem\"><em>Deadline: </em>{{todoItem.deadline}}</p>\n    <p *ngIf=\"todoItem\"><em>Importance: </em>{{todoItem.importance}}</p>\n    <p *ngIf=\"todoItem\"><em>State: </em>{{todoItem.state}}</p>\n    <p *ngIf=\"todoItem\"><em>Date Closed: </em>{{todoItem.dateClosed}}</p>\n\n    <h2>Comments</h2>\n    <table *ngIf=\"todoItem\">\n        <thead>\n            <tr>\n                <th>Text</th>\n                <th></th>\n                <th>Important</th>\n            </tr>\n        </thead>\n        <tr *ngFor=\"let comment of todoItem.comments\">\n            <td>{{ comment.text }}</td>\n            <td></td>\n            <td>{{ comment.important }}</td>\n        </tr>\n    </table>\n\n    <a [routerLink]=\"['/fetch-data']\" routerLinkActive=\"active\">Back</a>\n");
 
 /***/ }),
 
@@ -302,6 +302,14 @@ let FetchDataComponent = class FetchDataComponent {
             this.todoItems = result;
             console.log(this.todoItems);
         }, error => console.error(error));
+    }
+    delete(todoItemId) {
+        if (confirm('Are you sure you want to delete the item with id' + todoItemId + '?')) {
+            this.http.delete(this.baseUrl + 'api/todoitems/' + todoItemId).subscribe(result => {
+                alert('Todo Item successfully deleted!');
+                this.loadTodoItems();
+            }, error => alert('Cannot delete item. Please check if it has comments.'));
+        }
     }
     submit() {
         var todoItem = {};

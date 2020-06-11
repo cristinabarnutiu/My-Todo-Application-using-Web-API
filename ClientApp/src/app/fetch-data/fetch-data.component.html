@@ -31,9 +31,9 @@
             <td>{{ todoItem.dateClosed }}</td>
             <td>{{ todoItem.numberOfComments }}</td>
             <td>
-            <a [routerLink]="['/fetch-data',todoItem.id]" routerLinkActive="active">Details</a> | 
-            <a>Edit</a> |
-            <a>Delete</a>
+            <a class="btn btn-primary" [routerLink]="['/fetch-data',todoItem.id]" routerLinkActive="active">Details</a> | 
+            <a class="btn btn-secondary">Edit</a> | 
+            <a class="btn btn-danger" (click)="delete(todoItem.id)">Delete</a>
             </td>
         </tr>
     </tbody>
